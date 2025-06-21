@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 인증 데모</title>
+</head>
+<body>
+<h1>간단한 회원 인증 UI</h1>
+
+<h2>1. 회원가입</h2>
+<input type="text" id="signup-username" placeholder="아이디"><br>
+<input type="text" id="signup-email" placeholder="이메일"><br>
+<input type="text" id="signup-nickname" placeholder="닉네임"><br>
+<input type="password" id="signup-password" placeholder="비밀번호"><br>
+<button onclick="signup()">회원가입</button>
+
+<hr>
+
+<h2>2. 로그인</h2>
+<input type="text" id="login-username" placeholder="아이디"><br>
+<input type="password" id="login-password" placeholder="비밀번호"><br>
+<button onclick="login()">로그인</button>
+
+<p id="token-display" style="color:green;"></p>
+
+<hr>
+
+<h2>3. 내 정보 조회</h2>
+<button onclick="getProfile()">내 정보 보기</button>
+<pre id="profile-result"></pre>
+
+<hr>
+
+<h2>4. 회원 탈퇴</h2>
+<button onclick="deleteUser()">회원 탈퇴</button>
+<p id="delete-result" style="color:red;"></p>
+
+<script>
+    let token = "";
+
+    function signup() {
+        const data = {
+            username: document.getElementById("signup-username").value,
+            email: document.getElementById("signup-email").value,
+            nickname: document.getElementById("signup-nickname").value,
+            password: document.getElementById("signup-password").value
+        };
+
+        fetch("http://localhost:8080/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+            .then(data => alert("회원가입 성공!"))
+            .catch(err => alert("회원가입 실패"));
+    }
+
+    function login() {
+        const data = {
+            username: document.getElementById("login-username").value,
+            password: document.getElementById("login-password").value
+        };
+
+        fetch("http://localhost:8080/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        }).then(async res => {
+            if (!res.ok) {
+                const error = await res.text();
+                alert(error);
+                return;
+            }
+
+            const response = await res.json();
+            token = "Bearer " + response.token; // ✅ Bearer 접두어 붙임
+            document.getElementById("token-display").innerText = "JWT: " + token;
+            alert("로그인 성공!");
+        }).catch(err => {
+            alert(err.message);
+        });
+    }
+
+
+    function getProfile() {
+        fetch("http://localhost:8080/users/me", {
+            method: "GET",
+            headers: { "Authorization": token }
+        }).then(async res => {
+            if (!res.ok) {
+                const error = await res.text();
+                alert(error);
+                return;
+            }
+
+            const data = await res.json();
+            document.getElementById("profile-result").innerText = JSON.stringify(data, null, 2);
+        }).catch(err => alert("요청 오류: " + err.message));
+    }
+
+
+    function deleteUser() {
+        fetch("http://localhost:8080/users/me", {
+            method: "DELETE",
+            headers: { "Authorization": token }
+        }).then(async res => {
+            if (res.ok) {
+                document.getElementById("delete-result").innerText = "회원 탈퇴 완료";
+            } else {
+                const error = await res.text();
+                document.getElementById("delete-result").innerText = "탈퇴 실패: " + error;
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
