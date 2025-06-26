@@ -23,6 +23,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = true)
+    private Boolean is_mentor;
+
+    @Column(nullable = true)
+    private Long department_id;
+
 
     @Builder
     public User(String username, String email,String nickname, String password) {
@@ -30,5 +36,7 @@ public class User {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.is_mentor = false;
+        this.department_id = 0L;
     }
 }
