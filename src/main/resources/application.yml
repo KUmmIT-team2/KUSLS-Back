@@ -9,6 +9,13 @@ spring:
   config:
     import: optional:file:.env[.properties]
 
+  sql:
+    init:
+      mode: never
+      data-locations:
+        - classpath:init/college-data.sql
+        - classpath:init/department-data.sql
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
