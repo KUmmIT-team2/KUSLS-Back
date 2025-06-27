@@ -30,4 +30,11 @@ public class CategoryService {
                 .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
                 .collect(Collectors.toList());
     }
+
+    // 전체 학과 목록 조회
+    public List<DepartmentResponse> getAllDepartments() {
+        return departmentRepository.findAll().stream()
+                .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
+                .collect(Collectors.toList());
+    }
 }
