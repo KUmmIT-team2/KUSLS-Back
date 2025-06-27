@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Tag(name = "커뮤니티", description = "커뮤니티 게시판 기능")
 @RequiredArgsConstructor
@@ -23,5 +25,12 @@ public class CommunityController {
                                                                  @RequestBody CommunityCreateRequest request) {
         CommunityResponse response = communityService.createPost(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
+    @Operation(summary = "모든 커뮤니티 게시글 조회", description = "전체 커뮤니티 게시글을 조회합니다.")
+    public ResponseEntity<List<CommunityResponse>> getAllPosts() {
+        List<CommunityResponse> posts = communityService.getAllPosts();
+        return ResponseEntity.ok(posts);
     }
 }
