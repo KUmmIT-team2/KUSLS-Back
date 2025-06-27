@@ -15,4 +15,10 @@ public class ProfileResponse {
 
     @Schema(description = "닉네임", example = "<NICKNAME>")
     private String nickname;
+
+    @Schema(description = "자기소개", example = "안녕하세요! KUSLS입니다.")
+    private String bio;
+
+    @Schema(description = "링크", example = "https://github.com/my-profile")
+    private String url;
 }
