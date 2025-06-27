@@ -15,6 +15,8 @@ import com.example.auth.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommunityService {
@@ -56,7 +58,18 @@ public class CommunityService {
         );
     }
 
-    //todo: 게시글 목록 조회
+    public List<CommunityResponse> getAllPosts() {
+        List<Community> communities = communityRepository.findAll();
+        return communities.stream()
+                .map(c -> new CommunityResponse(
+                        c.getId(),
+                        c.getTitle(),
+                        c.getContent(),
+                        c.getUser().getNickname(),
+                        c.getCreatedAt()
+                ))
+                .toList();
+    }
     //todo: 게시글 상세
     //todo: 댓글 작성
     //todo: 게시글 북마크
