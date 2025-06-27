@@ -1,9 +1,9 @@
-INSERT INTO college (id, name) VALUES (1, '문과대학');
-INSERT INTO college (id, name) VALUES (2, '이과대학');
-INSERT INTO college (id, name) VALUES (3, '건축대학');
-INSERT INTO college (id, name) VALUES (4, '공과대학');
-INSERT INTO college (id, name) VALUES (5, '사회과학대학');
-INSERT INTO college (id, name) VALUES (6, '경영대학');
-INSERT INTO college (id, name) VALUES (7, '부동산과학원');
-INSERT INTO college (id, name) VALUES (8, '융합과학기술원');
-INSERT INTO college (id, name) VALUES (9, '생명과학대학');
+INSERT IGNORE INTO college (id, name) VALUES (1, '문과대학');
+INSERT IGNORE INTO college (id, name) VALUES (2, '이과대학');
+INSERT IGNORE INTO college (id, name) VALUES (3, '건축대학');
+INSERT IGNORE INTO college (id, name) VALUES (4, '공과대학');
+INSERT IGNORE INTO college (id, name) VALUES (5, '사회과학대학');
+INSERT IGNORE INTO college (id, name) VALUES (6, '경영대학');
+INSERT IGNORE INTO college (id, name) VALUES (7, '부동산과학원');
+INSERT IGNORE INTO college (id, name) VALUES (8, '융합과학기술원');
+INSERT IGNORE INTO college (id, name) VALUES (9, '생명과학대학');

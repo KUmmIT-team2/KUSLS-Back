@@ -37,4 +37,11 @@ public class CategoryService {
                 .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
                 .collect(Collectors.toList());
     }
+
+    // 학과 하나만 조회
+    public DepartmentResponse getDepartmentById(Long departmentId) {
+        return departmentRepository.findById(departmentId)
+                .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
+                .orElseThrow(() -> new RuntimeException("해당 학과를 찾을 수 없습니다. ID: " + departmentId));
+    }
 }

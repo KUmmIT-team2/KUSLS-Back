@@ -24,7 +24,7 @@ public class CategoryController {
         return categoryService.getAllColleges();
     }
 
-    @GetMapping("/colleges/{collegeId}/departments")
+    @GetMapping("/colleges/{collegeId}")
     @Operation(summary = "단과대학별 학과 조회", description = "특정 단과대학에 소속된 학과(Department) 목록을 조회합니다.")
     public List<DepartmentResponse> getDepartmentsByCollege(@PathVariable Long collegeId) {
         return categoryService.getDepartmentsByCollege(collegeId);
@@ -35,4 +35,11 @@ public class CategoryController {
     public List<DepartmentResponse> getAllDepartments() {
         return categoryService.getAllDepartments();
     }
+
+    @GetMapping("/departments/{departmentId}")
+    @Operation(summary = "학과 단건 조회", description = "특정 학과(Department)를 ID로 조회합니다.")
+    public DepartmentResponse getDepartmentById(@PathVariable Long departmentId) {
+        return categoryService.getDepartmentById(departmentId);
+    }
+
 }
