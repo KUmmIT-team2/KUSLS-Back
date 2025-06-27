@@ -31,6 +31,15 @@
 
 <hr>
 
+<h3>내 정보 수정</h3>
+<input type="text" id="update-nickname" placeholder="닉네임"><br>
+<textarea id="update-bio" placeholder="자기소개"></textarea><br>
+<input type="text" id="update-url" placeholder="링크"><br>
+<button onclick="updateProfile()">정보 수정</button>
+<p id="update-result" style="color:blue;"></p>
+
+<hr>
+
 <h2>4. 회원 탈퇴</h2>
 <button onclick="deleteUser()">회원 탈퇴</button>
 <p id="delete-result" style="color:red;"></p>
@@ -95,9 +104,40 @@
 
             const data = await res.json();
             document.getElementById("profile-result").innerText = JSON.stringify(data, null, 2);
+
+            // ✅ 조회 결과를 수정 입력창에 자동 채우기
+            document.getElementById("update-nickname").value = data.nickname || "";
+            document.getElementById("update-bio").value = data.bio || "";
+            document.getElementById("update-url").value = data.url || "";
         }).catch(err => alert("요청 오류: " + err.message));
     }
 
+    function updateProfile() {
+        const data = {
+            nickname: document.getElementById("update-nickname").value,
+            bio: document.getElementById("update-bio").value,
+            url: document.getElementById("update-url").value
+        };
+
+        fetch("http://localhost:8080/profile/me", {
+            method: "PUT",
+            headers: {
+                "Authorization": token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }).then(async res => {
+            if (res.ok) {
+                document.getElementById("update-result").innerText = "수정 성공!";
+                getProfile(); // 갱신된 정보 다시 조회
+            } else {
+                const error = await res.text();
+                document.getElementById("update-result").innerText = "수정 실패: " + error;
+            }
+        }).catch(err => {
+            document.getElementById("update-result").innerText = "오류: " + err.message;
+        });
+    }
 
     function deleteUser() {
         fetch("http://localhost:8080/users/me", {
