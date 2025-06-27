@@ -37,6 +37,8 @@ public class UserService {
                 user.getUsername(),
                 user.getEmail(),
                 user.getNickname(),
+                user.getIsMentor(),
+                user.getDepartment() != null ? user.getDepartment().getId() : null,
                 profile.getBio(),
                 profile.getUrl()
         );
