@@ -1,5 +1,6 @@
 package com.example.auth.domain.user;
 
+import com.example.auth.domain.category.Department;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,10 +25,11 @@ public class User {
     private String password;
 
     @Column(nullable = true)
-    private Boolean is_mentor;
+    private Boolean isMentor;
 
-    @Column(nullable = true)
-    private Long department_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
 
     @Builder
@@ -36,7 +38,6 @@ public class User {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.is_mentor = false;
-        this.department_id = 0L;
+        this.isMentor = false;
     }
 }
