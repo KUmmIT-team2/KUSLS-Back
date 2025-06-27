@@ -29,4 +29,10 @@ public class CategoryController {
     public List<DepartmentResponse> getDepartmentsByCollege(@PathVariable Long collegeId) {
         return categoryService.getDepartmentsByCollege(collegeId);
     }
+
+    @GetMapping("/departments")
+    @Operation(summary = "전체 학과 조회", description = "모든 학과(Department)를 조회합니다.")
+    public List<DepartmentResponse> getAllDepartments() {
+        return categoryService.getAllDepartments();
+    }
 }
