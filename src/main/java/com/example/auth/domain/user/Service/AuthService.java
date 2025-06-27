@@ -1,5 +1,7 @@
 package com.example.auth.domain.user.Service;
 
+import com.example.auth.domain.profile.Profile;
+import com.example.auth.domain.profile.ProfileRepository;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.domain.user.dto.*;
@@ -17,6 +19,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ProfileRepository profileRepository;
 
     public SignupResponse signup(SignupRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -35,6 +38,13 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+
+        Profile profile = Profile.builder()
+                .user(user)
+                .bio("")
+                .url("")
+                .build();
+        profileRepository.save(profile);
 
         return new SignupResponse(user.getUsername(), user.getEmail(), user.getNickname());
     }
