@@ -7,6 +7,7 @@ import com.example.auth.domain.category.DepartmentRepository;
 import com.example.auth.domain.community.Community;
 import com.example.auth.domain.community.CommunityRepository;
 import com.example.auth.domain.community.dto.CommunityCreateRequest;
+import com.example.auth.domain.community.dto.CommunityDetailResponse;
 import com.example.auth.domain.community.dto.CommunityResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
@@ -70,7 +71,23 @@ public class CommunityService {
                 ))
                 .toList();
     }
-    //todo: 게시글 상세
+
+    public CommunityDetailResponse getPostById(Long id) {
+        Community community = communityRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+
+        return new CommunityDetailResponse(
+                community.getId(),
+                community.getTitle(),
+                community.getContent(),
+                community.getUser().getNickname(),
+                community.getCollege() != null ? community.getCollege().getName() : null,
+                community.getDepartment() != null ? community.getDepartment().getName() : null,
+                community.getCreatedAt()
+        );
+    }
+
+
     //todo: 댓글 작성
     //todo: 게시글 북마크
 }
