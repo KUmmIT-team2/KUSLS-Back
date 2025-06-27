@@ -6,16 +6,9 @@ jwt:
   expiration: 3600000
 
 spring:
-  config:
-    import: optional:file:.env[.properties]
-
   sql:
     init:
       mode: always
-      data-locations:
-        - classpath:init/college-data.sql
-        - classpath:init/department-data.sql
-        - classpath:init/badge-data.sql
 
   datasource:
     url: ${DB_URL}
