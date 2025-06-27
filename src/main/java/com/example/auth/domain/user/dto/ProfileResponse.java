@@ -16,6 +16,12 @@ public class ProfileResponse {
     @Schema(description = "닉네임", example = "<NICKNAME>")
     private String nickname;
 
+    @Schema(description = "멘토 여부", example = "true")
+    private Boolean isMentor;
+
+    @Schema(description = "학과 ID", example = "2")
+    private Long departmentId;
+
     @Schema(description = "자기소개", example = "안녕하세요! KUSLS입니다.")
     private String bio;
 
