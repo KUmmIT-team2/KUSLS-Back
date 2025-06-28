@@ -56,4 +56,8 @@ public class QnA {
         this.replyCount++;
     }
 
+    public void incrementBookmarkCount() {
+        this.bookmarkCount++;
+    }
+
 }

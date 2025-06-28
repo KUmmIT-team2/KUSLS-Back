@@ -6,6 +6,8 @@ import com.example.auth.domain.bookmark.BookmarkableType;
 import com.example.auth.domain.bookmark.dto.BookmarkCreateRequest;
 import com.example.auth.domain.bookmark.dto.BookmarkResponse;
 import com.example.auth.domain.community.CommunityRepository;
+import com.example.auth.domain.qna.QnA;
+import com.example.auth.domain.qna.QnaRepository;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
@@ -22,6 +24,7 @@ public class BookmarkService {
     private final BookmarkRepository bookmarkRepository;
     private final UserRepository userRepository;
     private final CommunityRepository communityRepository;
+    private final QnaRepository qnaRepository;
 
     /**
      * 북마크 추가
@@ -51,6 +54,9 @@ public class BookmarkService {
 
 
         Bookmark saved = bookmarkRepository.save(bookmark);
+        QnA qnA = qnaRepository.findById(req.getBookmarkableId())
+                .orElseThrow(() -> new CustomException(ErrorCode.QNA_NOT_FOUND));
+        qnA.incrementBookmarkCount();
 
         // 4. 결과 반환
         return new BookmarkResponse(
