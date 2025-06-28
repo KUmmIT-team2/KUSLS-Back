@@ -22,6 +22,7 @@ public enum ErrorCode {
     COLLEGE_NOT_FOUND(404, "해당 대학을 찾을 수 없습니다."),
     BADGE_NOT_FOUND(404, "뱃지를 찾을 수 없습니다."),
     QNA_NOT_FOUND(404, "작성된 QNA 게시글을 찾을 수 없습니다"),
+    COMMUNITY_NOT_FOUND(404, "작성된 커뮤니티 게시글을 찾을 수 없습니다"),
 
     // 500: 서버 오류
     INTERNAL_SERVER_ERROR(500, "서버 오류가 발생했습니다."),

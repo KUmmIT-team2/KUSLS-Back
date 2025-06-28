@@ -32,13 +32,13 @@ public class CommunityService {
         College college = null;
         if (request.getCollegeId() != null) {
             college = collegeRepository.findById(request.getCollegeId())
-                    .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(ErrorCode.COLLEGE_NOT_FOUND));
         }
 
         Department department = null;
         if (request.getDepartmentId() != null) {
             department = departmentRepository.findById(request.getDepartmentId())
-                    .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(ErrorCode.DEPARTMENT_NOT_FOUND));
         }
 
         Community community = Community.builder()
@@ -74,7 +74,7 @@ public class CommunityService {
 
     public CommunityDetailResponse getPostById(Long id) {
         Community community = communityRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.COMMUNITY_NOT_FOUND));
 
         return new CommunityDetailResponse(
                 community.getId(),
