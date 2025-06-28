@@ -5,7 +5,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 *.jar
-.env
 
 ### STS ###
 .apt_generated
