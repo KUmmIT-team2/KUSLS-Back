@@ -3,6 +3,7 @@ package com.example.auth.domain.profile.Service;
 import com.example.auth.domain.profile.Profile;
 import com.example.auth.domain.profile.ProfileRepository;
 import com.example.auth.domain.profile.dto.ProfileUpdateRequest;
+import com.example.auth.domain.profile.dto.ProfileUpdateResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
@@ -18,7 +19,7 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
 
-    public void updateMyProfile(ProfileUpdateRequest request) {
+    public ProfileUpdateResponse updateMyProfile(ProfileUpdateRequest request) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof String && principal.equals("anonymousUser")) {
@@ -35,6 +36,11 @@ public class ProfileService {
 
         profile.update(request.getBio(), request.getUrl());
 
-        profileRepository.save(profile);
+        Profile updatedProfile = profileRepository.save(profile);
+
+        return new ProfileUpdateResponse(
+                updatedProfile.getBio(),
+                updatedProfile.getUrl()
+        );
     }
 }
