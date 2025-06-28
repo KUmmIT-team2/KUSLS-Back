@@ -3,6 +3,7 @@ package com.example.auth.domain.comment;
 import com.example.auth.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class Comment {
     @Column(name = "commentable_type", columnDefinition = "ENUM('CommunityPost','QnaPost')", nullable = false)
     private CommentableType commentableType;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 }
