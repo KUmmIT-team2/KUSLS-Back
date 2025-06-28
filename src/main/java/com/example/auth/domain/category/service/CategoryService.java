@@ -2,6 +2,7 @@ package com.example.auth.domain.category.service;
 
 import com.example.auth.domain.category.CollegeRepository;
 import com.example.auth.domain.category.DepartmentRepository;
+import com.example.auth.domain.category.dto.CategoryResponse;
 import com.example.auth.domain.category.dto.CollegeResponse;
 import com.example.auth.domain.category.dto.DepartmentResponse;
 import com.example.auth.exception.CustomException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +47,18 @@ public class CategoryService {
         return departmentRepository.findById(departmentId)
                 .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
                 .orElseThrow(() -> new CustomException(ErrorCode.DEPARTMENT_NOT_FOUND));
+    }
+
+    public List<CategoryResponse> getCategoryBySubstring(String substring) {
+        Stream<CategoryResponse> departmentStream = departmentRepository.findAll().stream()
+                .filter(department -> department.getName().toLowerCase().contains(substring.toLowerCase()))
+                .map(department -> new CategoryResponse(department.getName()));
+
+        Stream<CategoryResponse> collegeStream = collegeRepository.findAll().stream()
+                .filter(college -> college.getName().toLowerCase().contains(substring.toLowerCase()))
+                .map(college -> new CategoryResponse(college.getName()));
+
+        return Stream.concat(departmentStream, collegeStream)
+                .collect(Collectors.toList());
     }
 }
