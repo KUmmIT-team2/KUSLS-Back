@@ -27,8 +27,8 @@ public class ProfileController {
 
     @GetMapping("/{id}")
     @Operation(summary = "프로필 상세 조회", description = "ID로 특정 멘토의 프로필 상세 내용을 조회합니다.")
-    public ResponseEntity<ProfileResponse> getProfile(@PathVariable Long id) {
-        ProfileDetailResponse profile = ProfileService.getProfileById(id);
+    public ProfileDetailResponse getProfile(@PathVariable Long id) {
+        ProfileDetailResponse profile = profileService.getProfileById(id);
         return profile;
     }
 
