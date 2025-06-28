@@ -3,7 +3,7 @@ name: server
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -17,12 +17,12 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd ~/server_session
-            git checkout main
+            git checkout master
             kill -9 $(lsof -t -i :8080)
             git add .
             git commit -m "temp commit"
-            git fetch origin main
-            git merge origin/main
+            git fetch origin master
+            git merge origin/master
             if [ $? -ne 0 ]; then
               echo "Merge conflict detected. Resolving by applying remote changes."
               git checkout --theirs $(git diff --name-only --diff-filter=U)
