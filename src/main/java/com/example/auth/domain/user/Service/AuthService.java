@@ -1,5 +1,6 @@
 package com.example.auth.domain.user.Service;
 
+import com.example.auth.domain.category.Department;
 import com.example.auth.domain.category.DepartmentRepository;
 import com.example.auth.domain.profile.Profile;
 import com.example.auth.domain.profile.ProfileRepository;
@@ -21,17 +22,23 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final ProfileRepository profileRepository;
+    private final DepartmentRepository departmentRepository;
 
     public SignupResponse signup(SignupRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
         }
 
+        Department department = departmentRepository.findById(request.getDepartmentId())
+                .orElseThrow(() -> new CustomException(ErrorCode.DEPARTMENT_NOT_FOUND));
+
+
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .studentNumber(request.getStudentNumber())
                 .isMentor(request.getIsMentor())
+                .departmentId(department)
                 .build();
 
         userRepository.save(user);
