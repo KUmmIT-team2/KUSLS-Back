@@ -1,21 +1,14 @@
 package com.example.auth.domain.profile.Controller;
 
-import com.example.auth.domain.category.CollegeRepository;
-import com.example.auth.domain.category.DepartmentRepository;
-import com.example.auth.domain.profile.ProfileRepository;
-import com.example.auth.domain.profile.Service.ProfileService;
 import com.example.auth.domain.profile.dto.ProfileDetailResponse;
 import com.example.auth.domain.profile.dto.ProfileUpdateRequest;
 import com.example.auth.domain.profile.dto.ProfileUpdateResponse;
-import com.example.auth.domain.user.UserRepository;
-import com.example.auth.domain.user.dto.ProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
