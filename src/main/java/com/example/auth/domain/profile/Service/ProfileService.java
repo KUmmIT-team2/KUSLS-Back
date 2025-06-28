@@ -39,8 +39,7 @@ public class ProfileService {
         Profile updatedProfile = profileRepository.save(profile);
 
         return new ProfileUpdateResponse(
-                updatedProfile.getBio(),
-                updatedProfile.getUrl()
+                updatedProfile.getHashtag() != null ? updatedProfile.getHashtag() : ""
         );
     }
 }
