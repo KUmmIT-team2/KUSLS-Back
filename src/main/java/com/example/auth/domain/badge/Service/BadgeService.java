@@ -4,6 +4,8 @@ import com.example.auth.domain.badge.*;
 import com.example.auth.domain.badge.dto.BadgeResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
+import com.example.auth.exception.CustomException;
+import com.example.auth.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,10 +36,10 @@ public class BadgeService {
 
     public void grantBadge(Long userId, Long badgeId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Badge badge = badgeRepository.findById(badgeId)
-                .orElseThrow(() -> new EntityNotFoundException("뱃지를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.BADGE_NOT_FOUND));
 
         UserBadgeId userBadgeId = new UserBadgeId(userId, badgeId);
 
