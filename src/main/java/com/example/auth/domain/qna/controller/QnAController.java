@@ -8,7 +8,6 @@ import com.example.auth.domain.comment.CommentableType;
 import com.example.auth.domain.comment.dto.CommentCreateRequest;
 import com.example.auth.domain.comment.dto.CommentResponse;
 import com.example.auth.domain.comment.service.CommentService;
-import com.example.auth.domain.qna.QnA;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
 import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
@@ -84,9 +83,10 @@ public class QnAController {
 
     }
 
-    @GetMapping("search")
-    public List<QnA> searchQnA(@RequestParam String keyword) {
-    return qnAService.searchByTitle(keyword);
+    @PostMapping("/{id}/recommend")
+    public ResponseEntity<Integer> recommendQna(@PathVariable Long id) {
+        int updatedCount = qnAService.recommend(id);
+        return ResponseEntity.ok(updatedCount);
     }
 
     private Long getCurrentUserId() {
@@ -94,3 +94,4 @@ public class QnAController {
         return 1L;
     }
 }
+

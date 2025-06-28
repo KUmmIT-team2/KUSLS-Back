@@ -47,4 +47,9 @@ public class QnA {
     @Builder.Default
     private int replyCount = 0;
 
+    // 추천 수 1 올리는 도메인 메서드
+    public void addRecommend() {
+        this.recommendCount++;
+    }
+
 }

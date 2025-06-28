@@ -111,7 +111,15 @@ public class QnAService {
         );
     }
 
-    public List<QnA> searchByTitle(String keyword) {
-        return qnaRepository.findByTitleContaining(keyword);
+    /**
+     * qna 글 추천수 증가
+     */
+    public int recommend(Long id) {
+        QnA qna = qnaRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.QNA_NOT_FOUND));
+        qna.addRecommend();
+        return qna.getRecommendCount();
+
     }
 }
+
