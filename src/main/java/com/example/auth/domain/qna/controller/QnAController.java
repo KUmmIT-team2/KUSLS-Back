@@ -1,5 +1,9 @@
 package com.example.auth.domain.qna.controller;
 
+import com.example.auth.domain.bookmark.BookmarkableType;
+import com.example.auth.domain.bookmark.dto.BookmarkCreateRequest;
+import com.example.auth.domain.bookmark.dto.BookmarkResponse;
+import com.example.auth.domain.bookmark.service.BookmarkService;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
 import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
@@ -19,6 +23,7 @@ import java.util.List;
 @RequestMapping("/qna")
 public class QnAController {
     private final QnAService qnAService;
+    private final BookmarkService bookmarkService;
 
     @PostMapping
     @Operation(summary = "QnA 게시글 작성", description = "새로운 QnA 글 작성")
@@ -41,5 +46,24 @@ public class QnAController {
         QnaDetailResponse qna = qnAService.getQnaDetailById(id);
         return ResponseEntity.ok(qna);
 
+    }
+
+    @PostMapping("/{qnaId}/bookmark")
+    @Operation(summary = "qna 게시글 북마크 추가", description = "qnaId로 특정 qna 북마크")
+    public ResponseEntity<BookmarkResponse> bookmarkQna(
+            @PathVariable Long qnaId,
+            @RequestBody BookmarkCreateRequest request) {
+        request.setBookmarkableType(BookmarkableType.QnaPost);
+        request.setBookmarkableId(qnaId);
+
+        Long userId = getCurrentUserId();
+        BookmarkResponse response = bookmarkService.create(userId, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+    }
+
+    private Long getCurrentUserId() {
+        // TODO: Spring Security 에서 JWT payload 등에서 추출
+        return 1L;
     }
 }

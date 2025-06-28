@@ -38,7 +38,11 @@ public class BookmarkService {
             if (!communityRepository.existsById(req.getBookmarkableId())) {
                 throw new CustomException(ErrorCode.NOT_FOUND);
             }
-        } //todo: qna
+        } else if (req.getBookmarkableType() == BookmarkableType.QnaPost) {
+            if (!communityRepository.existsById(req.getBookmarkableId())) {
+                throw new CustomException(ErrorCode.NOT_FOUND);
+            }
+        }
 
         // 3. 저장
         Bookmark bookmark = Bookmark.builder()
