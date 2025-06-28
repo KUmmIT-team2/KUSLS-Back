@@ -10,12 +10,15 @@ public enum ErrorCode {
     INVALID_INPUT(400, "입력값이 유효하지 않습니다."),
 
     // 401: 인증 실패
-    UNAUTHORIZED(401, "인증되지 않은 사용자입니다."),
+    UNAUTHORIZED(401, "로그인이 필요합니다."),
     INVALID_PASSWORD(401, "비밀번호가 일치하지 않습니다."),
 
     // 404: 리소스 없음
     NOT_FOUND(404, "리소스를 찾을 수 없습니다."),
     USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다."),
+    DEPARTMENT_NOT_FOUND(404, "해당 학과를 찾을 수 없습니다."),
+    COLLEGE_NOT_FOUND(404, "해당 대학을 찾을 수 없습니다."),
+    BADGE_NOT_FOUND(404, "뱃지를 찾을 수 없습니다."),
 
     // 500: 서버 오류
     INTERNAL_SERVER_ERROR(500, "서버 오류가 발생했습니다."),
