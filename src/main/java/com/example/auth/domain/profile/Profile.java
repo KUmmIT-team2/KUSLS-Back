@@ -10,7 +10,7 @@ import lombok.*;
 public class Profile {
 
     @Id
-    private Long userId;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -18,20 +18,15 @@ public class Profile {
     private User user;
 
     @Column(columnDefinition = "TEXT")
-    private String bio;
-
-    @Column(length = 255)
-    private String url;
+    private String hashtag;
 
     @Builder
-    public Profile(User user, String bio, String url) {
+    public Profile(User user, String hashtag) {
         this.user = user;
-        this.bio = bio;
-        this.url = url;
+        this.hashtag = hashtag;
     }
 
-    public void update(String bio, String url) {
-        this.bio = bio;
-        this.url = url;
+    public void update(String hashtag) {
+        this.hashtag = hashtag;
     }
 }

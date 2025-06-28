@@ -1,5 +1,6 @@
 package com.example.auth.domain.user.Service;
 
+import com.example.auth.domain.category.DepartmentRepository;
 import com.example.auth.domain.profile.Profile;
 import com.example.auth.domain.profile.ProfileRepository;
 import com.example.auth.domain.user.User;
@@ -26,27 +27,16 @@ public class AuthService {
             throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
         }
 
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
-        }
-
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .email(request.getEmail())
-                .nickname(request.getNickname())
+                .studentNumber(request.getStudentNumber())
+                .isMentor(request.getIsMentor())
                 .build();
 
         userRepository.save(user);
 
-        Profile profile = Profile.builder()
-                .user(user)
-                .bio("")
-                .url("")
-                .build();
-        profileRepository.save(profile);
-
-        return new SignupResponse(user.getUsername(), user.getEmail(), user.getNickname());
+        return new SignupResponse(user.getUsername(), user.getStudentNumber(), user.getIsMentor(), user.getDepartment().getId());
     }
 
     public AuthResponse login(LoginRequest request) {

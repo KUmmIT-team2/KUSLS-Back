@@ -30,17 +30,12 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        Profile profile = profileRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
         return new ProfileResponse(
                 user.getUsername(),
-                user.getEmail(),
-                user.getNickname(),
+                user.getStudentNumber(),
                 user.getIsMentor(),
                 user.getDepartment() != null ? user.getDepartment().getId() : null,
-                profile.getBio(),
-                profile.getUrl()
+                user.getCommentCount()
         );
     }
 

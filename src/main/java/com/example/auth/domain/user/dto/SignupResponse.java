@@ -11,9 +11,9 @@ public class SignupResponse {
     @Schema(description = "아이디", example = "<USERNAME>")
     private String username;
 
-    @Schema(description = "이메일", example = "<EMAIL>")
-    private String email;
+    private String studentNumber;
 
-    @Schema(description = "닉네임", example = "<NICKNAME>")
-    private String nickname;
+    private Boolean isMentor;
+
+    private Long departmentId;
 }
