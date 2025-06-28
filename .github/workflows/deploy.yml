@@ -39,6 +39,7 @@ jobs:
 
             # --- 4. Gradle 빌드 ---
             echo "Starting Gradle clean build..."
+            chmod +x gradlew
             ./gradlew clean build
             echo "Gradle build complete."
 
