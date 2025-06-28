@@ -29,6 +29,9 @@ public class QnAService {
     private final CollegeRepository collegeRepository;
     private final DepartmentRepository departmentRepository;
 
+    /**
+     * QnA 생성
+     */
     public QnaResponse createQnA(Long userId, QnaCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -52,7 +55,6 @@ public class QnAService {
         QnA qna = QnA.builder()
                 .user(user)
                 .title(request.getTitle())
-                .content(request.getContent())
                 .college(college)
                 .department(department)
                 .build();
@@ -61,39 +63,51 @@ public class QnAService {
         return new QnaResponse(
                 saved.getId(),
                 saved.getTitle(),
-                saved.getContent(),
-                saved.getUser().getNickname(),
+                saved.getUser().getUsername(),
                 saved.getCreatedAt(),
-                saved.getIsAnswered()
+                saved.getBookmarkCount(),
+                saved.getRecommendCount(),
+                saved.getReplyCount()
         );
     }
 
-    public List<QnaResponse> getAllQnAs() {
-        List<QnA> communities = qnaRepository.findAll();
-        return communities.stream()
+    /**
+     * qnA 정렬
+     */
+    public List<QnaResponse> getAllPostsSorted(String orderBy) {
+        List<QnA> list = switch (orderBy) {
+            case "likes"  -> qnaRepository.findAllByOrderByRecommendCountDesc();
+            default       -> qnaRepository.findAllByOrderByCreatedAtDesc();
+        };
+        return list.stream()
                 .map(c -> new QnaResponse(
                         c.getId(),
                         c.getTitle(),
-                        c.getContent(),
-                        c.getUser().getNickname(),
+                        c.getUser().getUsername(),
                         c.getCreatedAt(),
-                        c.getIsAnswered()
+                        c.getBookmarkCount(),
+                        c.getRecommendCount(),
+                        c.getReplyCount()
                 ))
                 .toList();
     }
 
+    /**
+     * qnA 상세조회
+     */
     public QnaDetailResponse getQnaDetailById(Long id) {
         QnA qnA = qnaRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.QNA_NOT_FOUND));
         return new QnaDetailResponse(
                 qnA.getId(),
                 qnA.getTitle(),
-                qnA.getContent(),
-                qnA.getUser().getNickname(),
+                qnA.getUser().getUsername(),
                 qnA.getCollege() != null ? qnA.getCollege().getName() : null,
                 qnA.getDepartment() != null ? qnA.getDepartment().getName() : null,
                 qnA.getCreatedAt(),
-                qnA.getIsAnswered()
+                qnA.getBookmarkCount(),
+                qnA.getRecommendCount(),
+                qnA.getReplyCount()
         );
     }
 }

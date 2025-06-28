@@ -39,11 +39,13 @@ public class QnAController {
     }
 
     @GetMapping
-    @Operation(summary = "모든 qna 게시글 조회", description = "전체 qna 게시글을 조회")
-    public ResponseEntity<List<QnaResponse>> getAllQnas() {
-        List<QnaResponse> allQnAs = qnAService.getAllQnAs();
+    @Operation(summary = "모든 qna 게시글 조회", description = "GET /qna -> 최신순, GET /qna?orderBy=likes -> 추천순")
+    public ResponseEntity<List<QnaResponse>> getAllQnas(
+            @RequestParam(name = "orderBy", required = false, defaultValue = "createdAt") String orderBy)
+     {
+        List<QnaResponse> allQnAs = qnAService.getAllPostsSorted(orderBy);
         return ResponseEntity.ok(allQnAs);
-    }
+     }
 
     @GetMapping("/{id}")
     @Operation(summary = "qna 게시글 상세 조회", description = "ID로 특정 qna 글 찾기")

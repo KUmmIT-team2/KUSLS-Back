@@ -62,45 +62,6 @@ CREATE TABLE user_badge (
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE community_post (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    college_id BIGINT,
-    department_id BIGINT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id)
-        REFERENCES user(id)
-        ON DELETE CASCADE,
-    FOREIGN KEY (college_id)
-        REFERENCES college(id)
-        ON DELETE SET NULL,
-    FOREIGN KEY (department_id)
-        REFERENCES department(id)
-        ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE qna_post (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    user_id BIGINT NOT NULL,
-    title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    college_id BIGINT,
-    department_id BIGINT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_answered BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id)
-      REFERENCES user(id)
-      ON DELETE CASCADE,
-    FOREIGN KEY (college_id)
-      REFERENCES college(id)
-      ON DELETE SET NULL,
-    FOREIGN KEY (department_id)
-      REFERENCES department(id)
-      ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 CREATE TABLE comment (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT NOT NULL,
