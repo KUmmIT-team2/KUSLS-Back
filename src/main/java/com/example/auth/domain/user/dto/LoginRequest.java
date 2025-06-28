@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter @Setter
 public class LoginRequest {
-    @Schema(description = "아이디", example = "<USERNAME>")
+    @Schema(description = "이름", example = "홍길동")
     private String username;
 
-    @Schema(description = "비밀번호", example = "<PASSWORD>")
+    @Schema(description = "비밀번호", example = "1234")
     private String password;
 }

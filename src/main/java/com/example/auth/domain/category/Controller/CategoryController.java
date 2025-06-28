@@ -1,5 +1,6 @@
 package com.example.auth.domain.category.Controller;
 
+import com.example.auth.domain.category.dto.CategoryResponse;
 import com.example.auth.domain.category.service.CategoryService;
 import com.example.auth.domain.category.dto.CollegeResponse;
 import com.example.auth.domain.category.dto.DepartmentResponse;
@@ -47,4 +48,11 @@ public class CategoryController {
         return categoryService.getDepartmentById(departmentId);
     }
 
+    @GetMapping("/{substring}")
+    @Operation(summary = "단과대학/학과 조회", description = "특정 이름을 포함한 모든 단과대학 또는 학과를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "단과대학 또는 학과 조회 성공",
+        content = @Content(schema = @Schema(implementation = CategoryResponse.class)))
+    public List<CategoryResponse> getCategoryBySubstring(@PathVariable String substring) {
+        return categoryService.getCategoryBySubstring(substring);
+    }
 }

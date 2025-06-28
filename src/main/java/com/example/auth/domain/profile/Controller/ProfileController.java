@@ -1,14 +1,8 @@
 package com.example.auth.domain.profile.Controller;
 
-import com.example.auth.domain.category.CollegeRepository;
-import com.example.auth.domain.category.DepartmentRepository;
-import com.example.auth.domain.profile.ProfileRepository;
-import com.example.auth.domain.profile.Service.ProfileService;
 import com.example.auth.domain.profile.dto.ProfileDetailResponse;
 import com.example.auth.domain.profile.dto.ProfileUpdateRequest;
 import com.example.auth.domain.profile.dto.ProfileUpdateResponse;
-import com.example.auth.domain.user.UserRepository;
-import com.example.auth.domain.user.dto.ProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,7 +25,7 @@ public class ProfileController {
         return profile;
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     @Operation(summary = "내 프로필 수정", description = "자기소개, 링크 정보를 수정합니다.")
     @ApiResponse(responseCode = "200", description = "프로필 수정 성공", content = @Content(schema = @Schema (implementation = ProfileUpdateResponse.class)))
     public ProfileUpdateResponse updateMyProfile(@RequestBody ProfileUpdateRequest request) {
