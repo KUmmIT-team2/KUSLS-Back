@@ -5,14 +5,11 @@ import com.example.auth.domain.category.service.CategoryService;
 import com.example.auth.domain.category.dto.CollegeResponse;
 import com.example.auth.domain.category.dto.DepartmentResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,30 +49,10 @@ public class CategoryController {
     }
 
     @GetMapping("/{substring}")
-    @Operation(summary = "단과대학/학과 이름으로 검색", description = "부분 문자열을 포함하는 단과대학 및 학과 목록을 반환합니다.")
-    @ApiResponse(
-            responseCode = "200",
-            description = "성공적으로 검색된 단과대학/학과 목록",
-            content = @Content(
-                    mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = CategoryResponse.class)),
-                    examples = {
-                            @ExampleObject(
-                                    name = "검색 예시",
-                                    summary = "다양한 카테고리 검색 결과",
-                                    value = """
-                    [
-                        { "name": "국어국문학과" },
-                        { "name": "영어영문학과" },
-                        { "name": "중어중문학과" },
-                    ]
-                    """
-                            )
-                    }
-            )
-    )
-    public ResponseEntity<List<CategoryResponse>> getCategoryBySubstring(@PathVariable String substring) {
-        List<CategoryResponse> categories = categoryService.getCategoryBySubstring(substring);
-        return ResponseEntity.ok(categories);
+    @Operation(summary = "단과대학/학과 조회", description = "특정 이름을 포함한 모든 단과대학 또는 학과를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "단과대학 또는 학과 조회 성공",
+        content = @Content(schema = @Schema(implementation = CategoryResponse.class)))
+    public List<CategoryResponse> getCategoryBySubstring(@PathVariable String substring) {
+        return categoryService.getCategoryBySubstring(substring);
     }
 }
