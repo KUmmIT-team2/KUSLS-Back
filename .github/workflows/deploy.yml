@@ -28,7 +28,9 @@ jobs:
             cd ~/KUSLS-Back
             git fetch origin master
             git reset --hard origin/master
+            chmod +x gradlew
             ./gradlew build
             sudo systemctl start docker
-            sudo docker-compose up --build -d
+            sudo /usr/local/bin/docker-compose up --build -d
           EOF
+      
