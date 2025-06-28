@@ -10,8 +10,6 @@ import com.example.auth.domain.community.dto.CommunityCreateRequest;
 import com.example.auth.domain.community.dto.CommunityDetailResponse;
 import com.example.auth.domain.community.dto.CommunityResponse;
 import com.example.auth.domain.community.dto.CommunitySummaryResponse;
-import com.example.auth.domain.qna.QnA;
-import com.example.auth.domain.qna.dto.QnaResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
