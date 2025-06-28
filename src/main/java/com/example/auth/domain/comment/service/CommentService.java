@@ -24,6 +24,7 @@ public class CommentService {
 
     /**
      * 댓글 작성
+     * todo: Usertable에서 답변개수 추가
      */
     public CommentResponse create(Long userId, CommentCreateRequest req) {
         // 1. 작성자 검증

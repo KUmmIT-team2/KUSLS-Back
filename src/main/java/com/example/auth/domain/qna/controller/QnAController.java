@@ -11,6 +11,7 @@ import com.example.auth.domain.comment.service.CommentService;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
 import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
+import com.example.auth.domain.qna.dto.QnaSummaryResponse;
 import com.example.auth.domain.qna.service.QnAService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,10 +41,10 @@ public class QnAController {
 
     @GetMapping
     @Operation(summary = "모든 qna 게시글 조회", description = "GET /qna -> 최신순, GET /qna?orderBy=likes -> 추천순")
-    public ResponseEntity<List<QnaResponse>> getAllQnas(
+    public ResponseEntity<List<QnaSummaryResponse>> getAllQnas(
             @RequestParam(name = "orderBy", required = false, defaultValue = "createdAt") String orderBy)
      {
-        List<QnaResponse> allQnAs = qnAService.getAllPostsSorted(orderBy);
+        List<QnaSummaryResponse> allQnAs = qnAService.getAllPostsSorted(orderBy);
         return ResponseEntity.ok(allQnAs);
      }
 

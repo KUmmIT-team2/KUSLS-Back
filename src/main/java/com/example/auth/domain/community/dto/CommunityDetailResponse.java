@@ -13,8 +13,11 @@ public class CommunityDetailResponse {
     private Long id;
     private String title;
     private String content;
-    private String writerNickname;
+    private String writerUsername;
     private String collegeName;
     private String departmentName;
     private LocalDateTime createdAt;
+    private int bookmarkCount;
+    private int recommendCount;
+    private int replyCount;
 }
