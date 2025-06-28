@@ -1,4 +1,4 @@
-package com.example.auth.domain.badge.Service;
+package com.example.auth.domain.badge.service;
 
 import com.example.auth.domain.badge.*;
 import com.example.auth.domain.badge.dto.BadgeResponse;
@@ -6,7 +6,6 @@ import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
 import com.example.auth.exception.ErrorCode;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

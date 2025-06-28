@@ -1,5 +1,9 @@
 package com.example.auth.domain.community.controller;
 
+import com.example.auth.domain.bookmark.BookmarkableType;
+import com.example.auth.domain.bookmark.dto.BookmarkCreateRequest;
+import com.example.auth.domain.bookmark.dto.BookmarkResponse;
+import com.example.auth.domain.bookmark.service.BookmarkService;
 import com.example.auth.domain.comment.CommentableType;
 import com.example.auth.domain.comment.dto.CommentCreateRequest;
 import com.example.auth.domain.comment.dto.CommentResponse;
@@ -24,6 +28,7 @@ import java.util.List;
 public class CommunityController {
     private final CommunityService communityService;
     private final CommentService commentService;
+    private final BookmarkService bookmarkService;
 
     @PostMapping
     @Operation(summary = "커뮤니티 게시글 작성", description = "새로운 커뮤니티 글 작성")
@@ -59,6 +64,20 @@ public class CommunityController {
 
         Long userId = getCurrentUserId(); // JWT에서 뽑아오는 현재 유저
         CommentResponse resp = commentService.create(userId, req);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    }
+
+    @PostMapping("/{communityId}/bookmark")
+    @Operation(summary = "커뮤니티 게시글 북마크 추가", description = "communityId로 특정 커뮤니티 북마크")
+    public ResponseEntity<BookmarkResponse> addCommunityBookmark(
+            @PathVariable Long communityId,
+            @RequestBody BookmarkCreateRequest req
+    ) {
+        req.setBookmarkableType(BookmarkableType.CommunityPost);
+        req.setBookmarkableId(communityId);
+
+        Long userId = getCurrentUserId();
+        BookmarkResponse resp = bookmarkService.create(userId, req);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 

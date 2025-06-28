@@ -87,7 +87,5 @@ public class CommunityService {
         );
     }
 
-
-    //todo: 댓글 작성
     //todo: 게시글 북마크
 }
