@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# DockerHub 로그인 (Private repo라면)
-docker login -u kroad0129 -p yourpassword
-
 # 최신 이미지 pull
 docker pull kroad0129/kusls:latest
 
