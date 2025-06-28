@@ -1,8 +1,9 @@
 name: server
+
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -15,48 +16,23 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            # --- 1. 프로젝트 디렉토리로 이동 ---
-            cd /home/ubuntu/KUSLS-Back
+            cd ~/server_session
+            git checkout main
+            kill -9 $(lsof -t -i :8080)
+            git add .
+            git commit -m "temp commit"
+            git fetch origin main
+            git merge origin/main
+            if [ $? -ne 0 ]; then
+              echo "Merge conflict detected. Resolving by applying remote changes."
+              git checkout --theirs $(git diff --name-only --diff-filter=U)
+              git add .
+              git commit -m "Resolved merge conflicts by applying remote changes."
+            else
+              echo "Merge successful, no conflicts detected."
+            fi
 
-            # --- 2. Git 리포지토리 최신 상태로 강제 동기화 ---
-            # 서버의 Git 리포지토리를 master 브랜치로 checkout하고
-            # 원격(origin/master)의 최신 상태로 강제로 초기화합니다.
-            # 이전에 커밋되지 않은 로컬 변경사항이나 병합 충돌을 무시하고
-            # 원격 저장소의 내용으로 서버의 코드를 완전히 덮어씁니다.
-            git checkout master
-            git reset --hard origin/master
-            # Git에 의해 추적되지 않는(untracked) 파일들도 모두 삭제하여 깨끗한 상태를 유지합니다.
-            git clean -df
-            # 원격의 최신 변경사항을 가져와 적용합니다.
-            git pull
-
-            # --- 3. 기존 애플리케이션 종료 ---
-            # 8080 포트를 사용하는 모든 프로세스를 강제로 종료합니다.
-            # '|| true'는 프로세스가 없을 경우에도 스크립트가 오류로 중단되지 않도록 합니다.
-            echo "Attempting to kill process on port 8080..."
-            kill -9 $(lsof -t -i :8080) || true
-            echo "Process on port 8080 killed or not found."
-
-            # --- 4. Gradle 빌드 ---
-            echo "Starting Gradle clean build..."
-            chmod +x gradlew
             ./gradlew clean build
-            echo "Gradle build complete."
-
-            # --- 5. Docker 컨테이너 및 이미지 재시작 ---
-            # 기존 Docker 컨테이너(server-dev)를 강제로 삭제합니다.
-            # 컨테이너가 없어도 오류가 나지 않도록 '|| true'를 사용합니다.
-            echo "Removing existing Docker container 'server-dev'..."
-            docker rm -f server-dev || true
-            echo "Container 'server-dev' removed."
-
-            # 기존 Docker 이미지(server-dev)를 삭제합니다.
-            # 이미지가 없어도 오류가 나지 않도록 '|| true'를 사용합니다.
-            echo "Removing existing Docker image 'server-dev'..."
-            docker rmi server-dev || true
-            echo "Image 'server-dev' removed."
-
-            # docker-compose-dev.yml 파일을 사용하여 새 컨테이너를 빌드하고 백그라운드에서 실행합니다.
-            echo "Starting Docker Compose build and run..."
-            docker-compose -f docker-compose-dev.yml -p server-dev up --build -d
-            echo "Docker Compose up complete."
+            docker rm -f server-dev --force
+            docker rmi server-dev
+            docker compose -f docker-compose-dev.yml -p server-dev up --build -d
