@@ -29,6 +29,7 @@ public class BookmarkService {
     /**
      * 북마크 추가
      */
+    @Transactional
     public BookmarkResponse create(Long userId, BookmarkCreateRequest req) {
         // 1. 작성자 검증
         User user = userRepository.findById(userId)
