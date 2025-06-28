@@ -35,7 +35,16 @@ public class CommentService {
             if (!communityRepository.existsById(req.getCommentableId())) {
                 throw new CustomException(ErrorCode.NOT_FOUND);
             }
-        } //todo: qna
+        } else if (req.getCommentableType() == CommentableType.QnaPost) {
+            if (!commentRepository.existsById(req.getCommentableId())) {
+                throw new CustomException(ErrorCode.NOT_FOUND);
+            }
+
+            // QnA 댓글은 멘토만 가능
+            if (!user.getIsMentor()) {
+                throw new CustomException(ErrorCode.NOT_A_MENTOR);
+            }
+        }
 
         // 3. 저장
         Comment comment = Comment.builder()
