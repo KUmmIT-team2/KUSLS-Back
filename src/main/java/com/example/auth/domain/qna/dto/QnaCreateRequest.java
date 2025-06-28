@@ -10,9 +10,6 @@ public class QnaCreateRequest {
     @NotBlank
     private String title;
 
-    @NotBlank
-    private String content;
-
     private Long collegeId;
     private Long departmentId;
 
