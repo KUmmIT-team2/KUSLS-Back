@@ -4,6 +4,10 @@ import com.example.auth.domain.bookmark.BookmarkableType;
 import com.example.auth.domain.bookmark.dto.BookmarkCreateRequest;
 import com.example.auth.domain.bookmark.dto.BookmarkResponse;
 import com.example.auth.domain.bookmark.service.BookmarkService;
+import com.example.auth.domain.comment.CommentableType;
+import com.example.auth.domain.comment.dto.CommentCreateRequest;
+import com.example.auth.domain.comment.dto.CommentResponse;
+import com.example.auth.domain.comment.service.CommentService;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
 import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
@@ -24,6 +28,7 @@ import java.util.List;
 public class QnAController {
     private final QnAService qnAService;
     private final BookmarkService bookmarkService;
+    private final CommentService commentService;
 
     @PostMapping
     @Operation(summary = "QnA 게시글 작성", description = "새로운 QnA 글 작성")
@@ -46,6 +51,19 @@ public class QnAController {
         QnaDetailResponse qna = qnAService.getQnaDetailById(id);
         return ResponseEntity.ok(qna);
 
+    }
+
+    @PostMapping("/{qnaId}/comments")
+    @Operation(summary = "qna 게시글 댓글 작성", description = "qnaId로 특정 qna 게시글 댓글 작성")
+    public ResponseEntity<CommentResponse> createQnaComment(
+            @PathVariable Long qnaId,
+            @RequestBody CommentCreateRequest request) {
+        request.setCommentableType(CommentableType.QnaPost);
+        request.setCommentableId(qnaId);
+
+        Long userId = getCurrentUserId();
+        CommentResponse resp = commentService.create(userId, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PostMapping("/{qnaId}/bookmark")
