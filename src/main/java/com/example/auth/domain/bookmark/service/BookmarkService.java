@@ -12,6 +12,7 @@ import com.example.auth.exception.CustomException;
 import com.example.auth.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,10 +60,10 @@ public class BookmarkService {
         );
     }
 
-    public List<BookmarkResponse> list(BookmarkableType type, Long bookmarkableId) {
-        var bookmarks = bookmarkRepository
-                .findAllByBookmarkableTypeAndBookmarkableIdOrderByCreatedAtAsc(type, bookmarkableId);
-
+    // 1) 로그인한 사용자가 북마크한 전체 QnA(또는 모든 타입)의 목록
+    @Transactional(readOnly = true)
+    public List<BookmarkResponse> findBookmarksByUser(Long userId) {
+        var bookmarks = bookmarkRepository.findAllByUserIdOrderByCreatedAtAsc(userId);
         return bookmarks.stream()
                 .map(c -> new BookmarkResponse(
                         c.getId(),
