@@ -8,6 +8,7 @@ import com.example.auth.domain.comment.CommentableType;
 import com.example.auth.domain.comment.dto.CommentCreateRequest;
 import com.example.auth.domain.comment.dto.CommentResponse;
 import com.example.auth.domain.comment.service.CommentService;
+import com.example.auth.domain.qna.QnA;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
 import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
@@ -80,6 +81,11 @@ public class QnAController {
         BookmarkResponse response = bookmarkService.create(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
+    }
+
+    @GetMapping("search")
+    public List<QnA> searchQnA(@RequestParam String keyword) {
+    return qnAService.searchByTitle(keyword);
     }
 
     private Long getCurrentUserId() {

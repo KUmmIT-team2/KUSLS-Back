@@ -7,4 +7,5 @@ import java.util.List;
 public interface QnaRepository extends JpaRepository<QnA, Long> {
     List<QnA> findAllByOrderByCreatedAtDesc();
     List<QnA> findAllByOrderByRecommendCountDesc();
+    List<QnA> findByTitleContaining(String keyword);
 }
