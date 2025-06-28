@@ -4,9 +4,12 @@ import com.example.auth.domain.category.College;
 import com.example.auth.domain.category.CollegeRepository;
 import com.example.auth.domain.category.Department;
 import com.example.auth.domain.category.DepartmentRepository;
+import com.example.auth.domain.community.Community;
+import com.example.auth.domain.community.dto.CommunityResponse;
 import com.example.auth.domain.qna.QnA;
 import com.example.auth.domain.qna.QnaRepository;
 import com.example.auth.domain.qna.dto.QnaCreateRequest;
+import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
@@ -14,6 +17,9 @@ import com.example.auth.exception.CustomException;
 import com.example.auth.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +60,35 @@ public class QnAService {
                 saved.getUser().getNickname(),
                 saved.getCreatedAt(),
                 saved.getIsAnswered()
+        );
+    }
+
+    public List<QnaResponse> getAllQnAs() {
+        List<QnA> communities = qnaRepository.findAll();
+        return communities.stream()
+                .map(c -> new QnaResponse(
+                        c.getId(),
+                        c.getTitle(),
+                        c.getContent(),
+                        c.getUser().getNickname(),
+                        c.getCreatedAt(),
+                        c.getIsAnswered()
+                ))
+                .toList();
+    }
+
+    public QnaDetailResponse getQnaDetailById(Long id) {
+        QnA qnA = qnaRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
+        return new QnaDetailResponse(
+                qnA.getId(),
+                qnA.getTitle(),
+                qnA.getContent(),
+                qnA.getUser().getNickname(),
+                qnA.getCollege() != null ? qnA.getCollege().getName() : null,
+                qnA.getDepartment() != null ? qnA.getDepartment().getName() : null,
+                qnA.getCreatedAt(),
+                qnA.getIsAnswered()
         );
     }
 }

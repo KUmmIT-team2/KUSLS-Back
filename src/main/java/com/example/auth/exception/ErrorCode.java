@@ -8,6 +8,7 @@ public enum ErrorCode {
     DUPLICATE_USERNAME(400, "이미 존재하는 사용자명입니다."),
     DUPLICATE_EMAIL(400, "이미 존재하는 이메일입니다."),
     INVALID_INPUT(400, "입력값이 유효하지 않습니다."),
+    NOT_A_MENTOR(400, "멘토가 아니므로 댓글을 작성할 수 없습니다"),
 
     // 401: 인증 실패
     UNAUTHORIZED(401, "로그인이 필요합니다."),
