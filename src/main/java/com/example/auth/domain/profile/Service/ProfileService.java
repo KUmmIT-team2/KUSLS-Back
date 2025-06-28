@@ -34,7 +34,7 @@ public class ProfileService {
         Profile profile = profileRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        profile.update(request.getBio(), request.getUrl());
+        profile.update(request.getHashtag());
 
         Profile updatedProfile = profileRepository.save(profile);
 
