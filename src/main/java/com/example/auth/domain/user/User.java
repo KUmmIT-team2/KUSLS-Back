@@ -39,4 +39,8 @@ public class User {
         this.department = departmentId;
         this.commentCount = commentCount != null ? commentCount : 0L;
     }
+
+    public void incrementCommentCount() {
+        this.commentCount++;
+    }
 }

@@ -10,6 +10,7 @@ import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
 import com.example.auth.exception.ErrorCode;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class CommentService {
 
     /**
      * 댓글 작성
-     * todo: Usertable에서 답변개수 추가
      */
+    @Transactional
     public CommentResponse create(Long userId, CommentCreateRequest req) {
         // 1. 작성자 검증
         User user = userRepository.findById(userId)
@@ -56,6 +57,7 @@ public class CommentService {
                 .build();
 
         Comment saved = commentRepository.save(comment);
+        user.incrementCommentCount();
 
         // 4. 결과 반환
         return new CommentResponse(
