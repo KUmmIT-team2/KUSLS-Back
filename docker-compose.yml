@@ -19,7 +19,7 @@ services:
       - kusls-net
 
   be:
-    image: taehee/kusls:latest
+    image: kroad0129/kusls:latest
     container_name: kusls-app
     restart: unless-stopped
     ports:
