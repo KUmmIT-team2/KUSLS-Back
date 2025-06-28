@@ -4,17 +4,16 @@ import com.example.auth.domain.category.College;
 import com.example.auth.domain.category.Department;
 import com.example.auth.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Community {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +41,13 @@ public class Community {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Builder
-    public Community(User user, String title, String content, College college, Department department) {
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.college = college;
-        this.department = department;
-    }
+    @Builder.Default
+    private int bookmarkCount = 0;
+
+    @Builder.Default
+    private int recommendCount = 0;
+
+    @Builder.Default
+    private int replyCount = 0;
 
 }

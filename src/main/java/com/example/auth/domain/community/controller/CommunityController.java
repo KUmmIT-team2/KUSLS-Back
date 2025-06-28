@@ -11,6 +11,7 @@ import com.example.auth.domain.comment.service.CommentService;
 import com.example.auth.domain.community.dto.CommunityCreateRequest;
 import com.example.auth.domain.community.dto.CommunityDetailResponse;
 import com.example.auth.domain.community.dto.CommunityResponse;
+import com.example.auth.domain.community.dto.CommunitySummaryResponse;
 import com.example.auth.domain.community.service.CommunityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,9 +40,10 @@ public class CommunityController {
     }
 
     @GetMapping
-    @Operation(summary = "모든 커뮤니티 게시글 조회", description = "전체 커뮤니티 게시글을 조회합니다.")
-    public ResponseEntity<List<CommunityResponse>> getAllPosts() {
-        List<CommunityResponse> posts = communityService.getAllPosts();
+    @Operation(summary = "모든 커뮤니티 게시글 조회", description = "GET /community -> 최신순, GET /community?orderBy=likes -> 추천순")
+    public ResponseEntity<List<CommunitySummaryResponse>> getAllPosts(@RequestParam(name = "orderBy", required = false, defaultValue = "createdAt") String orderBy)
+    {
+        List<CommunitySummaryResponse> posts = communityService.getAllPosts(orderBy);
         return ResponseEntity.ok(posts);
     }
 
