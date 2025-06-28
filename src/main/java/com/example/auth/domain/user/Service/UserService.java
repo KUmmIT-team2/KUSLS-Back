@@ -35,10 +35,10 @@ public class UserService {
 
         return new ProfileResponse(
                 user.getUsername(),
-                user.getEmail(),
-                user.getNickname(),
+                user.getStudentNumber(),
                 user.getIsMentor(),
                 user.getDepartment() != null ? user.getDepartment().getId() : null,
+                user.getCommentCount(),
                 profile.getBio(),
                 profile.getUrl()
         );

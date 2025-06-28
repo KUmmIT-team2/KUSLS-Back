@@ -62,7 +62,7 @@ public class QnAService {
                 saved.getId(),
                 saved.getTitle(),
                 saved.getContent(),
-                saved.getUser().getNickname(),
+                saved.getUser().getUsername(),
                 saved.getCreatedAt(),
                 saved.getIsAnswered()
         );
@@ -75,7 +75,7 @@ public class QnAService {
                         c.getId(),
                         c.getTitle(),
                         c.getContent(),
-                        c.getUser().getNickname(),
+                        c.getUser().getUsername(),
                         c.getCreatedAt(),
                         c.getIsAnswered()
                 ))
@@ -89,7 +89,7 @@ public class QnAService {
                 qnA.getId(),
                 qnA.getTitle(),
                 qnA.getContent(),
-                qnA.getUser().getNickname(),
+                qnA.getUser().getUsername(),
                 qnA.getCollege() != null ? qnA.getCollege().getName() : null,
                 qnA.getDepartment() != null ? qnA.getDepartment().getName() : null,
                 qnA.getCreatedAt(),

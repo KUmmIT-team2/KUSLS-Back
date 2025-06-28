@@ -57,7 +57,7 @@ public class BookmarkService {
         // 4. 결과 반환
         return new BookmarkResponse(
                 saved.getId(),
-                saved.getUser().getNickname(),
+                saved.getUser().getUsername(),
                 saved.getCreatedAt()
         );
     }
@@ -69,7 +69,7 @@ public class BookmarkService {
         return bookmarks.stream()
                 .map(c -> new BookmarkResponse(
                         c.getId(),
-                        c.getUser().getNickname(),
+                        c.getUser().getUsername(),
                         c.getCreatedAt()
                 ))
                 .toList();
