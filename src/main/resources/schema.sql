@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS qna_post;
 DROP TABLE IF EXISTS community_post;
 DROP TABLE IF EXISTS user_badge;
 DROP TABLE IF EXISTS profile;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS college;
 DROP TABLE IF EXISTS badge;
@@ -22,7 +22,7 @@ CREATE TABLE department (
         ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE users (
+CREATE TABLE user (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -39,7 +39,7 @@ CREATE TABLE profile (
     bio TEXT,
     url VARCHAR(255),
     FOREIGN KEY (user_id)
-     REFERENCES users(id)
+     REFERENCES user(id)
      ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -55,7 +55,7 @@ CREATE TABLE user_badge (
     badge_id BIGINT NOT NULL,
     PRIMARY KEY (user_id, badge_id),
     FOREIGN KEY (user_id)
-        REFERENCES users(id)
+        REFERENCES user(id)
         ON DELETE CASCADE,
     FOREIGN KEY (badge_id)
         REFERENCES badge(id)
@@ -71,7 +71,7 @@ CREATE TABLE community_post (
     department_id BIGINT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id)
-        REFERENCES users(id)
+        REFERENCES user(id)
         ON DELETE CASCADE,
     FOREIGN KEY (college_id)
         REFERENCES college(id)
@@ -91,7 +91,7 @@ CREATE TABLE qna_post (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     is_answered BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id)
-      REFERENCES users(id)
+      REFERENCES user(id)
       ON DELETE CASCADE,
     FOREIGN KEY (college_id)
       REFERENCES college(id)
@@ -109,6 +109,6 @@ CREATE TABLE comment (
     commentable_type ENUM('CommunityPost', 'QnaPost') NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id)
-     REFERENCES users(id)
+     REFERENCES user(id)
      ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
