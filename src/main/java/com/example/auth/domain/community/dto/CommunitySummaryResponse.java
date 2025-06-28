@@ -1,21 +1,18 @@
 package com.example.auth.domain.community.dto;
 
+import com.example.auth.domain.category.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @AllArgsConstructor
-public class CommunityResponse {
+public class CommunitySummaryResponse {
     private Long id;
     private String title;
-    private String content;
-    private String writerNickname;
+    private String departmentName;
     private LocalDateTime createdAt;
-    private int bookmarkCount;
     private int recommendCount;
     private int replyCount;
 }

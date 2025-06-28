@@ -9,6 +9,9 @@ import com.example.auth.domain.community.CommunityRepository;
 import com.example.auth.domain.community.dto.CommunityCreateRequest;
 import com.example.auth.domain.community.dto.CommunityDetailResponse;
 import com.example.auth.domain.community.dto.CommunityResponse;
+import com.example.auth.domain.community.dto.CommunitySummaryResponse;
+import com.example.auth.domain.qna.QnA;
+import com.example.auth.domain.qna.dto.QnaResponse;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
@@ -54,20 +57,27 @@ public class CommunityService {
                 saved.getId(),
                 saved.getTitle(),
                 saved.getContent(),
-                saved.getUser().getNickname(),
-                saved.getCreatedAt()
+                saved.getUser().getUsername(),
+                saved.getCreatedAt(),
+                saved.getBookmarkCount(),
+                saved.getRecommendCount(),
+                saved.getReplyCount()
         );
     }
 
-    public List<CommunityResponse> getAllPosts() {
-        List<Community> communities = communityRepository.findAll();
-        return communities.stream()
-                .map(c -> new CommunityResponse(
+    public List<CommunitySummaryResponse> getAllPosts(String orderBy) {
+        List<Community> list = switch (orderBy) {
+            case "likes"  -> communityRepository.findAllByOrderByRecommendCountDesc();
+            default       -> communityRepository.findAllByOrderByCreatedAtDesc();
+        };
+        return list.stream()
+                .map(c -> new CommunitySummaryResponse(
                         c.getId(),
                         c.getTitle(),
-                        c.getContent(),
-                        c.getUser().getNickname(),
-                        c.getCreatedAt()
+                        c.getDepartment() != null ? c.getDepartment().getName() : null,
+                        c.getCreatedAt(),
+                        c.getRecommendCount(),
+                        c.getReplyCount()
                 ))
                 .toList();
     }
@@ -80,10 +90,13 @@ public class CommunityService {
                 community.getId(),
                 community.getTitle(),
                 community.getContent(),
-                community.getUser().getNickname(),
+                community.getUser().getUsername(),
                 community.getCollege() != null ? community.getCollege().getName() : null,
                 community.getDepartment() != null ? community.getDepartment().getName() : null,
-                community.getCreatedAt()
+                community.getCreatedAt(),
+                community.getBookmarkCount(),
+                community.getRecommendCount(),
+                community.getReplyCount()
         );
     }
 
