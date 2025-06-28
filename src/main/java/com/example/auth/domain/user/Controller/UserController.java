@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "나의 정보", description = "나의 정보 조회/수정/삭제")
+@Tag(name = "나의 정보", description = "나의 정보 조회/삭제")
 @RequiredArgsConstructor
 public class UserController {
 

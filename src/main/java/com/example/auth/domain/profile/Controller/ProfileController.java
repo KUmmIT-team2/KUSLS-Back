@@ -25,7 +25,7 @@ public class ProfileController {
         return profile;
     }
 
-    @PutMapping("/update")
+    @PutMapping("")
     @Operation(summary = "내 프로필 수정", description = "자기소개, 링크 정보를 수정합니다.")
     @ApiResponse(responseCode = "200", description = "프로필 수정 성공", content = @Content(schema = @Schema (implementation = ProfileUpdateResponse.class)))
     public ProfileUpdateResponse updateMyProfile(@RequestBody ProfileUpdateRequest request) {

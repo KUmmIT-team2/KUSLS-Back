@@ -6,15 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Schema(description = "스크랩 DTO")
+@Getter @Setter
 public class BookmarkCreateRequest {
     @NotNull
-    @Schema(description = "스크랩 종류", example = "Community")
+    @Schema(description = "북마크 대상 타입", example = "CommunityPost")
     private BookmarkableType bookmarkableType;
 
     @NotNull
-    @Schema(description = "스크랩 게시글 ID", example = "1")
+    @Schema(description = "북마크 대상 ID", example = "1")
     private Long bookmarkableId;
 }

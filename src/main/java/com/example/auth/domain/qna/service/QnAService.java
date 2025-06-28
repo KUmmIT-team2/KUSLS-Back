@@ -110,4 +110,8 @@ public class QnAService {
                 qnA.getReplyCount()
         );
     }
+
+    public List<QnA> searchByTitle(String keyword) {
+        return qnaRepository.findByTitleContaining(keyword);
+    }
 }

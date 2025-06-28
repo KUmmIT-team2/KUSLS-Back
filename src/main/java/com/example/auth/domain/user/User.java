@@ -18,6 +18,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String studentNumber;
 
     @Column(nullable = false)
@@ -38,5 +39,9 @@ public class User {
         this.isMentor = isMentor != null ? isMentor : false;
         this.department = departmentId;
         this.commentCount = commentCount != null ? commentCount : 0L;
+    }
+
+    public void incrementCommentCount() {
+        this.commentCount++;
     }
 }
