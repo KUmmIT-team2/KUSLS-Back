@@ -23,11 +23,11 @@ public class AuthService {
 
     public SignupResponse signup(SignupRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new CustomException(ErrorCode.DUPLICATE_USERNAME, "이미 존재하는 사용자명입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new CustomException(ErrorCode.DUPLICATE_EMAIL, "이미 존재하는 이메일입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
 
         User user = User.builder()
@@ -51,10 +51,10 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND, "사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new CustomException(ErrorCode.INVALID_PASSWORD, "비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
 
         String token = jwtTokenProvider.createToken(user.getId());

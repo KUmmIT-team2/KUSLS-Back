@@ -4,6 +4,8 @@ import com.example.auth.domain.category.CollegeRepository;
 import com.example.auth.domain.category.DepartmentRepository;
 import com.example.auth.domain.category.dto.CollegeResponse;
 import com.example.auth.domain.category.dto.DepartmentResponse;
+import com.example.auth.exception.CustomException;
+import com.example.auth.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,6 @@ public class CategoryService {
     public DepartmentResponse getDepartmentById(Long departmentId) {
         return departmentRepository.findById(departmentId)
                 .map(dept -> new DepartmentResponse(dept.getId(), dept.getName()))
-                .orElseThrow(() -> new RuntimeException("해당 학과를 찾을 수 없습니다. ID: " + departmentId));
+                .orElseThrow(() -> new CustomException(ErrorCode.DEPARTMENT_NOT_FOUND));
     }
 }
