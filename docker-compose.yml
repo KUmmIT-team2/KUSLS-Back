@@ -20,7 +20,7 @@ services:
 
   be:
     image: kroad0129/kusls:latest
-    container_name: kusls-app
+    container_name: kusls-db
     restart: unless-stopped
     ports:
       - "8080:8080"
