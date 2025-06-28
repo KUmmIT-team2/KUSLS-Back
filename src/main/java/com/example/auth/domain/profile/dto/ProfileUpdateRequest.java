@@ -6,8 +6,6 @@ import lombok.Setter;
 
 @Getter
 public class ProfileUpdateRequest {
-    @Schema(description = "자기소개", example = "안녕하세요! KUSLS입니다.")
-    private String bio;
-    @Schema(description = "링크", example = "https://github.com/my-profile")
-    private String url;
+    @Schema(description = "해쉬태그", example = "#미컴 #동기부여 #진로고민 #학업고민")
+    private String hashtag;
 }
