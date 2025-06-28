@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final ProfileRepository profileRepository;
 
     public ProfileResponse getProfile() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
