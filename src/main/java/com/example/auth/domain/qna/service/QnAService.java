@@ -16,6 +16,7 @@ import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
 import com.example.auth.exception.ErrorCode;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -114,6 +115,7 @@ public class QnAService {
     /**
      * qna 글 추천수 증가
      */
+    @Transactional
     public int recommend(Long id) {
         QnA qna = qnaRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.QNA_NOT_FOUND));
