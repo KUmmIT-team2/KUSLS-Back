@@ -4,6 +4,10 @@ import com.example.auth.domain.category.Service.CategoryService;
 import com.example.auth.domain.category.dto.CollegeResponse;
 import com.example.auth.domain.category.dto.DepartmentResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +42,8 @@ public class CategoryController {
 
     @GetMapping("/departments/{departmentId}")
     @Operation(summary = "학과 단건 조회", description = "특정 학과(Department)를 ID로 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "학과 조회 성공",
+            content = @Content(schema = @Schema(implementation = DepartmentResponse.class)))
     public DepartmentResponse getDepartmentById(@PathVariable Long departmentId) {
         return categoryService.getDepartmentById(departmentId);
     }

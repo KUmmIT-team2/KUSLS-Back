@@ -23,22 +23,16 @@ public class AuthController {
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "사용자의 회원가입을 처리합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원가입 성공",
-                    content = @Content(schema = @Schema(implementation = SignupResponse.class))
-            )
-    })
+    @ApiResponse(responseCode = "200", description = "회원가입 성공",
+            content = @Content(schema = @Schema(implementation = SignupResponse.class)))
     public SignupResponse signup(@RequestBody SignupRequest request) {
         return authService.signup(request);
     }
 
     @PostMapping("/login")
     @Operation(summary = "로그인", description = "사용자의 로그인 요청을 처리하고 토큰을 반환합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "토큰 발급 성공",
-                    content = @Content(schema = @Schema(implementation = AuthResponse.class))
-            )
-    })
+    @ApiResponse(responseCode = "200", description = "토큰 발급 성공",
+            content = @Content(schema = @Schema(implementation = AuthResponse.class)))
     public AuthResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }
