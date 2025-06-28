@@ -1,6 +1,5 @@
 package com.example.auth.domain.comment.dto;
 
-import com.example.auth.domain.comment.CommentableType;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
