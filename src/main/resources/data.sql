@@ -1,6 +1,3 @@
-INSERT IGNORE INTO badge (id, name, description) VALUES (1, '질문왕', '질문많이함');
-INSERT IGNORE INTO badge (id, name, description) VALUES (2, '답변왕', '답변많이함');
-
 INSERT IGNORE INTO college (id, name) VALUES (1, '문과대학');
 INSERT IGNORE INTO college (id, name) VALUES (2, '이과대학');
 INSERT IGNORE INTO college (id, name) VALUES (3, '건축대학');
@@ -10,6 +7,7 @@ INSERT IGNORE INTO college (id, name) VALUES (6, '경영대학');
 INSERT IGNORE INTO college (id, name) VALUES (7, '부동산과학원');
 INSERT IGNORE INTO college (id, name) VALUES (8, '융합과학기술원');
 INSERT IGNORE INTO college (id, name) VALUES (9, '생명과학대학');
+INSERT IGNORE INTO college (id, name) VALUES (99, '전체');
 
 -- 문과대학
 INSERT IGNORE INTO department (name, college_id) VALUES ('국어국문학과', 1);

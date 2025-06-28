@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: server-dev
+    env_file:
+      - ./.env
     image: server-dev
     restart: always
     ports:
