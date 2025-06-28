@@ -56,7 +56,8 @@ public class ProfileService {
         return new ProfileDetailResponse(
                 id,
                 user.getUsername(),
-                user.getDepartment().getCollege(),
+                user.getDepartment().getCollege().getName(),
+                user.getDepartment().getName(),
                 user.getStudentNumber(),
                 profile.getHashtag(),
                 user.getCommentCount()
