@@ -36,13 +36,6 @@ public class AuthService {
 
         userRepository.save(user);
 
-        Profile profile = Profile.builder()
-                .user(user)
-                .bio("")
-                .url("")
-                .build();
-        profileRepository.save(profile);
-
         return new SignupResponse(user.getUsername(), user.getStudentNumber(), user.getIsMentor(), user.getDepartment().getId());
     }
 

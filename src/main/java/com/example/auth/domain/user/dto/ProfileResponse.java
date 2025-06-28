@@ -20,9 +20,4 @@ public class ProfileResponse {
 
     private Long commentCount;
 
-    @Schema(description = "자기소개", example = "안녕하세요! KUSLS입니다.")
-    private String bio;
-
-    @Schema(description = "링크", example = "https://github.com/my-profile")
-    private String url;
 }
