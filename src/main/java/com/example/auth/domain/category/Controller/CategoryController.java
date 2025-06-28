@@ -51,6 +51,7 @@ public class CategoryController {
         return categoryService.getDepartmentById(departmentId);
     }
 
+    @GetMapping("/{substring}")
     @Operation(summary = "단과대학/학과 이름으로 검색", description = "부분 문자열을 포함하는 단과대학 및 학과 목록을 반환합니다.")
     @ApiResponse(
             responseCode = "200",
