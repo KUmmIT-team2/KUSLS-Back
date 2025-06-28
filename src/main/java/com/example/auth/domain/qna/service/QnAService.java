@@ -33,6 +33,10 @@ public class QnAService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
+        if (user.getIsMentor()) {
+            throw new CustomException(ErrorCode.NOT_A_MENTEE);
+        }
+
         College college = null;
         if (request.getCollegeId() != null) {
             college = collegeRepository.findById(request.getCollegeId())
@@ -44,6 +48,7 @@ public class QnAService {
             department = departmentRepository.findById(request.getDepartmentId())
                     .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
         }
+
         QnA qna = QnA.builder()
                 .user(user)
                 .title(request.getTitle())
