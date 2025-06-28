@@ -60,7 +60,7 @@ public class CommentService {
         return new CommentResponse(
                 saved.getId(),
                 saved.getContent(),
-                saved.getUser().getNickname(),
+                saved.getUser().getUsername(),
                 saved.getCreatedAt()
         );
     }
@@ -76,7 +76,7 @@ public class CommentService {
                 .map(c -> new CommentResponse(
                         c.getId(),
                         c.getContent(),
-                        c.getUser().getNickname(),
+                        c.getUser().getUsername(),
                         c.getCreatedAt()
                 ))
                 .toList();

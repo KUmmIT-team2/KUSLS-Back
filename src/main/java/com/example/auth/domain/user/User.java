@@ -15,29 +15,28 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
-    private String nickname;
-
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = true)
-    private Boolean isMentor;
+    private String studentNumber;
+
+    @Column(nullable = false)
+    private Boolean isMentor = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @Column(nullable = false)
+    private Long commentCount = 0L;
 
     @Builder
-    public User(String username, String email,String nickname, String password) {
+    public User(String username, String password, String studentNumber, Boolean isMentor, Department departmentId, Long commentCount) {
         this.username = username;
-        this.email = email;
-        this.nickname = nickname;
         this.password = password;
-        this.isMentor = false;
+        this.studentNumber = studentNumber;
+        this.isMentor = isMentor != null ? isMentor : false;
+        this.department = departmentId;
+        this.commentCount = commentCount != null ? commentCount : 0L;
     }
 }

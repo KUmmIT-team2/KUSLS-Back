@@ -54,7 +54,7 @@ public class CommunityService {
                 saved.getId(),
                 saved.getTitle(),
                 saved.getContent(),
-                saved.getUser().getNickname(),
+                saved.getUser().getUsername(),
                 saved.getCreatedAt()
         );
     }
@@ -66,7 +66,7 @@ public class CommunityService {
                         c.getId(),
                         c.getTitle(),
                         c.getContent(),
-                        c.getUser().getNickname(),
+                        c.getUser().getUsername(),
                         c.getCreatedAt()
                 ))
                 .toList();
@@ -80,7 +80,7 @@ public class CommunityService {
                 community.getId(),
                 community.getTitle(),
                 community.getContent(),
-                community.getUser().getNickname(),
+                community.getUser().getUsername(),
                 community.getCollege() != null ? community.getCollege().getName() : null,
                 community.getDepartment() != null ? community.getDepartment().getName() : null,
                 community.getCreatedAt()

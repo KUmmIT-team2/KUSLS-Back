@@ -9,12 +9,12 @@ public class SignupRequest {
     @Schema(description = "아이디", example = "<USERNAME>")
     private String username;
 
-    @Schema(description = "이메일", example = "<EMAIL>")
-    private String email;
-
-    @Schema(description = "닉네임", example = "<NICKNAME>")
-    private String nickname;
-
     @Schema(description = "비밀번호", example = "<PASSWORD>")
     private String password;
+
+    private String studentNumber;
+
+    private Boolean isMentor = false;
+
+    private Long departmentId = null;
 }
