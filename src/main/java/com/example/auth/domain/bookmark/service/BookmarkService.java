@@ -40,7 +40,7 @@ public class BookmarkService {
                 throw new CustomException(ErrorCode.COMMUNITY_NOT_FOUND);
             }
         } else if (req.getBookmarkableType() == BookmarkableType.QnaPost) {
-            if (!communityRepository.existsById(req.getBookmarkableId())) {
+            if (!qnaRepository.existsById(req.getBookmarkableId())) {
                 throw new CustomException(ErrorCode.QNA_NOT_FOUND);
             }
         }
