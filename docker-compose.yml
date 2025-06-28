@@ -1,37 +1,45 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    env_file:
-      - ./.env
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-network
-
   db:
     image: mysql:8.0
+    container_name: kusls-db
+    restart: unless-stopped
     ports:
       - "3306:3306"
-    env_file:
-      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: KUSLS_db
+      MYSQL_USER: KUSLS_user
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+      TZ: Asia/Seoul
     volumes:
-      - db_data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     networks:
-      - app-network
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      - kusls-net
 
-networks:
-  app-network:
+  be:
+    image: taehee/kusls:latest
+    container_name: kusls-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:mysql://db:3306/KUSLS_db
+      DB_USERNAME: KUSLS_user
+      DB_PASSWORD: ${DB_USER_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      TZ: Asia/Seoul
+    volumes:
+      - ./config:/config
+    networks:
+      - kusls-net
 
 volumes:
-  db_data:
+  db-data:
+
+networks:
+  kusls-net:
