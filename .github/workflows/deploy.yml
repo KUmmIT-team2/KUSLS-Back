@@ -59,3 +59,4 @@ jobs:
             cd ~/KUSLS-Back
             chmod +x deploy.sh
             ./deploy.sh
+
