@@ -3,6 +3,10 @@ package com.example.auth.domain.badge.Controller;
 import com.example.auth.domain.badge.Service.BadgeService;
 import com.example.auth.domain.badge.dto.BadgeResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,8 @@ public class BadgeController {
 
     @GetMapping("/user/{userId}")
     @Operation(summary = "사용자 보유 뱃지 조회", description = "특정 사용자가 보유한 모든 뱃지를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "모든 뱃지 조회 성공",
+    content = @Content(schema = @Schema(implementation = BadgeResponse.class)))
     public List<BadgeResponse> getUserBadges(@PathVariable Long userId) {
         return badgeService.getUserBadges(userId);
     }
