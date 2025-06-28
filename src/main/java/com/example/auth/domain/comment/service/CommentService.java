@@ -33,11 +33,11 @@ public class CommentService {
         // 2. commentable 존재 검증
         if (req.getCommentableType() == CommentableType.CommunityPost) {
             if (!communityRepository.existsById(req.getCommentableId())) {
-                throw new CustomException(ErrorCode.NOT_FOUND);
+                throw new CustomException(ErrorCode.COMMUNITY_NOT_FOUND);
             }
         } else if (req.getCommentableType() == CommentableType.QnaPost) {
             if (!commentRepository.existsById(req.getCommentableId())) {
-                throw new CustomException(ErrorCode.NOT_FOUND);
+                throw new CustomException(ErrorCode.QNA_NOT_FOUND);
             }
 
             // QnA 댓글은 멘토만 가능

@@ -9,6 +9,7 @@ public enum ErrorCode {
     DUPLICATE_EMAIL(400, "이미 존재하는 이메일입니다."),
     INVALID_INPUT(400, "입력값이 유효하지 않습니다."),
     NOT_A_MENTOR(400, "멘토가 아니므로 댓글을 작성할 수 없습니다"),
+    NOT_A_MENTEE(400, "멘티가 아니므로 댓글을 작성할 수 없습니다"),
 
     // 401: 인증 실패
     UNAUTHORIZED(401, "로그인이 필요합니다."),
@@ -20,6 +21,8 @@ public enum ErrorCode {
     DEPARTMENT_NOT_FOUND(404, "해당 학과를 찾을 수 없습니다."),
     COLLEGE_NOT_FOUND(404, "해당 대학을 찾을 수 없습니다."),
     BADGE_NOT_FOUND(404, "뱃지를 찾을 수 없습니다."),
+    QNA_NOT_FOUND(404, "작성된 QNA 게시글을 찾을 수 없습니다"),
+    COMMUNITY_NOT_FOUND(404, "작성된 커뮤니티 게시글을 찾을 수 없습니다"),
 
     // 500: 서버 오류
     INTERNAL_SERVER_ERROR(500, "서버 오류가 발생했습니다."),
