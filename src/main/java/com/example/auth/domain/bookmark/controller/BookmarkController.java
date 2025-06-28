@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,4 +30,12 @@ public class BookmarkController {
          List<BookmarkResponse> bookmarksByUser = bookmarkService.findBookmarksByUser(id);
          return ResponseEntity.ok(bookmarksByUser);
      }
+
+     @DeleteMapping("/{id}")
+     @Operation(summary = "북마크 목록 삭제", description = "로그인한 사용자가 북마크한 qna를 삭제한다")
+    public ResponseEntity<String> deleteBookmarks(@PathVariable Long id) {
+        return ResponseEntity.ok("Bookmark with ID" + id + " has been deleted");
+
+     }
+
 }
