@@ -1,4 +1,4 @@
-package com.example.auth.domain.category.Service;
+package com.example.auth.domain.category.service;
 
 import com.example.auth.domain.category.CollegeRepository;
 import com.example.auth.domain.category.DepartmentRepository;
