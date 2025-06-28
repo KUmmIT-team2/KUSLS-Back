@@ -83,6 +83,12 @@ public class QnAController {
 
     }
 
+    @PostMapping("/{id}/recommend")
+    public ResponseEntity<Integer> recommendQna(@PathVariable Long id) {
+        int updatedCount = qnAService.recommend(id);
+        return ResponseEntity.ok(updatedCount);
+    }
+
     private Long getCurrentUserId() {
         // TODO: Spring Security 에서 JWT payload 등에서 추출
         return 1L;
