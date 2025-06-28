@@ -13,11 +13,15 @@ import com.example.auth.domain.qna.dto.QnaDetailResponse;
 import com.example.auth.domain.qna.dto.QnaResponse;
 import com.example.auth.domain.qna.dto.QnaSummaryResponse;
 import com.example.auth.domain.qna.service.QnAService;
+import com.example.auth.exception.CustomException;
+import com.example.auth.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -90,8 +94,13 @@ public class QnAController {
     }
 
     private Long getCurrentUserId() {
-        // TODO: Spring Security 에서 JWT payload 등에서 추출
-        return 1L;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getPrincipal() == null) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED);
+        }
+
+        Object principal = auth.getPrincipal();
+        return (principal instanceof Long) ? (Long) principal : Long.parseLong(principal.toString());
     }
 }
 
