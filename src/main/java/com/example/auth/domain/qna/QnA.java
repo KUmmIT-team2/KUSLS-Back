@@ -52,4 +52,8 @@ public class QnA {
         this.recommendCount++;
     }
 
+    public void incrementReplyCount() {
+        this.replyCount++;
+    }
+
 }

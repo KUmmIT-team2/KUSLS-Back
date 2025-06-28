@@ -6,6 +6,8 @@ import com.example.auth.domain.comment.CommentableType;
 import com.example.auth.domain.comment.dto.CommentCreateRequest;
 import com.example.auth.domain.comment.dto.CommentResponse;
 import com.example.auth.domain.community.CommunityRepository;
+import com.example.auth.domain.qna.QnA;
+import com.example.auth.domain.qna.QnaRepository;
 import com.example.auth.domain.user.User;
 import com.example.auth.domain.user.UserRepository;
 import com.example.auth.exception.CustomException;
@@ -22,6 +24,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final CommunityRepository communityRepository;
+    private final QnaRepository qnaRepository;
 
     /**
      * 댓글 작성
@@ -58,6 +61,12 @@ public class CommentService {
 
         Comment saved = commentRepository.save(comment);
         user.incrementCommentCount();
+
+        if (req.getCommentableType() == CommentableType.QnaPost) {
+            QnA qnA = qnaRepository.findById(req.getCommentableId())
+                    .orElseThrow(() -> new CustomException(ErrorCode.QNA_NOT_FOUND));
+            qnA.incrementReplyCount();
+        }
 
         // 4. 결과 반환
         return new CommentResponse(
