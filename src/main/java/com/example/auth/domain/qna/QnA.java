@@ -4,17 +4,16 @@ import com.example.auth.domain.category.College;
 import com.example.auth.domain.category.Department;
 import com.example.auth.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class QnA {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +25,6 @@ public class QnA {
 
     @Column(length = 100, nullable = false)
     private String title;
-
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
 
     @ManyToOne
     @JoinColumn(name = "college_id")
@@ -42,17 +38,13 @@ public class QnA {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private Boolean isAnswered = false;
+    @Builder.Default
+    private int bookmarkCount = 0;
 
-    @Builder
-    public QnA(User user, String title, String content, College college, Department department) {
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.college = college;
-        this.department = department;
-        this.isAnswered = false;
-    }
+    @Builder.Default
+    private int recommendCount = 0;
+
+    @Builder.Default
+    private int replyCount = 0;
 
 }

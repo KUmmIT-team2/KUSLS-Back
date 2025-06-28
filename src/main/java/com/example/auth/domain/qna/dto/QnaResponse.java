@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 public class QnaResponse {
     private Long id;
     private String title;
-    private String content;
-    private String writerNickname;
+    private String writerUsername;
     private LocalDateTime createdAt;
-    @JsonProperty("isAnswered")
-    private boolean isAnswered;
+    private int bookmarkCount;
+    private int recommendCount;
+    private int replyCount;
 }

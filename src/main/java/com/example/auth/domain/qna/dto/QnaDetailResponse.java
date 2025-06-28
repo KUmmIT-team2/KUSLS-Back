@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 public class QnaDetailResponse {
     private Long id;
     private String title;
-    private String content;
-    private String writerNickname;
+    private String writerUsername;
     private String collegeName;
     private String departmentName;
     private LocalDateTime createdAt;
-    @JsonProperty("isAnswered")
-    private boolean isAnswered;
+    private int bookmarkCount;
+    private int recommendCount;
+    private int replyCount;
 }
